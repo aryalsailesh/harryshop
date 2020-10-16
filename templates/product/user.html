@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% for items in object %}
+
+{{items.product.name}}
+{% endfor %}
+
+{% endblock content %}

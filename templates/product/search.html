@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<body>
+  {% block content %}
+    <div class="container">
+        <div class="search mt-2">
+            {% if query %}
+                <h2 class="text-center">
+                    Products containing: {{ query }}
+                </h2>
+                <h3 class="text-center">
+                    {% with results.count as total_results %}
+                    Found {{ total_results }} result{{ total_results|pluralize }}
+                    {% endwith %}
+                </h3>
+        
+                <div class="row mt-1">
+                    {% for product in results %}
+                
+                        <div class="col-lg-3 col-md-4 mb-4">
+
+                
+                            <div class="card card-ecommerce box-element">
+
+                        
+                                <div class="view overlay poloroid">
+                                    <img src="{{ product.imageURL }}" class=" img-thumbnail img-fluid" style="width: 348px; max-height: 235px;" alt="">
+                                    <a>
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                            
+
+                            <!--Card content-->
+                                <div class="card-body">
+                                    <!--Category & Title-->
+
+                                    <h5 class="card-title mb-1"><strong><a href="{{ product.get_absolute_url }}" class="dark-grey-text">{{ product.name }}</a></strong></h5>
+                                    
+                                    <!-- Rating -->
+                                    
+                                    <div class="card-footer pb-0">
+                                    <div class="row mb-0">
+                                        <a href="/product{% url 'product:product-category' product.category.slug %}">
+                                        <span class="float-left"><strong>{{product.category}}</strong></span>
+                                        </a>                              
+                                    </div>
+                                </div>
+                                <!--Card footer-->
+                                <div class="card-footer pb-0">
+                                    <div class="row mb-0">
+                                        <span class="float-left"><strong>RS: {{product.price}}</strong></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--Card content-->
+
+                        </div>
+                    {% empty %}
+                    <p class="pg">
+                        No result For your query
+                    </p>
+                    {% endfor %}
+                </div>
+                <!--Grid column-->
+            {% else %}
+            <h1>Search for posts</h1>
+            <form method="get">
+            {{ form.as_p }}
+            <input type="submit" value="Search">
+            </form>
+            {% endif %}
+        </div>
+    </div>
+  {% endblock content %}
+</body>
+
+</html>

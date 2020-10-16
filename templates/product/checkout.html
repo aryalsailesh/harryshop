@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Checkout{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row mt-4 mb-4">
+       
+        <div class="col-lg-6">
+            <div class="table box-element">
+                <h3>Order Summary</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Products</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total Price</th>
+
+                        </tr>
+                        
+                    </thead>
+                    <tbody>
+                        {% for order_items in orders.order.all %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>
+                                <a href="{% url 'product:product-detail' order_items.product.slug %}">
+                                  <h5><strong>{{ order_items.product.name }}</strong></h5>
+                                
+                                </a>
+                            </td>
+                            <td> {{ order_items.quantity }}</td>
+                            <td>RS: {{ order_items.get_total }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="5"><b>Order Total</b></td>
+                            <td>RS: {{ orders.total_cart_price }}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="6">
+                              <a class="btn btn-primary float-right ml-2 " href="/">Continue Shopping</a>
+                            </td>
+                          
+                          </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-log-6 box-element ml-4">
+            <h1>Checkout Form:</h1>
+            <form action="{% url 'product:checkout' %}" method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                {{ p_form|crispy }}
+                <p><input type="submit" value="Checkout" /></p>
+            </form>
+        </div>
+
+    </div>
+    
+</div>
+
+{% endblock content %}

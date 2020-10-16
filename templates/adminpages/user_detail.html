@@ -1,0 +1,78 @@
+{% extends 'adminpages/admin_base.html' %}
+{% load static %}
+{% block title %}{{request.user.username }}{% endblock title %}
+
+{% block content %}
+
+    <div class="text-center container mt-4">
+        {% for p in profile %}
+        <img src="{{p.photo.url}}" class=" img-thumbnail center box-element"  style="max-height: 350px;" >
+    
+    {% endfor %}
+    </div>
+    
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-4 col-sm-12  align-item-stretch">
+            <div class="card card-profile box-element m-2">
+                <div>
+                    <h4>Personal Profile</h4>
+                </div>
+                <hr>
+                {% for u in user %}
+                <div>
+                    <h5>{{u.username}}</h5>
+                </div>
+                
+                <div>
+                    <h6>{{ u.first_name }} {{u.last_name}}</h6>
+                    <h6>{{ u.email }}</h6>
+                    
+                </div>
+                {% endfor %}
+                {% for p in profile %}
+                <div>
+                    <h6>{% if p.date_of_birth %}{{ p.date_of_birth }}{% else%}D.O.B Not Available {% endif %}</h6>
+                    
+                    
+                </div>
+                {% endfor %}
+    
+            </div>
+            
+        </div>
+        
+        <div class="col-lg-6 col-sm-12 d-flex align-item-stretch">
+            <div class="card card-profile box-element m-2">
+                <div>
+                    <h4>Address</a></h4>
+                </div>
+                <hr>
+                {% for  u in user %}
+                <div>
+                    <h5>{{ u.first_name}}</h5>
+                    
+                </div>
+                {% endfor %}
+                
+                {% for i in address %}
+               {% if i.tol %}
+                <div>
+                    
+                    <h6>{{i.tol|capfirst}}</h6>
+                    <h6>{{i.municipality|capfirst}}-{{i.ward|capfirst}},{{i.district|capfirst}}</h6>
+                    <h6>State:{{ i.state|capfirst }}</h6> 
+                </div>
+               {% endif %}
+                {% endfor %}
+               
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

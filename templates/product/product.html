@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load namify %}
+{% block title %}{{products.name}}{% endblock title %}
+
+
+  {% block content %}
+  
+
+ 
+  <!--Main layout-->
+  <main>
+    <div class="container dark-grey-text mt-2">
+      <ul class="breadcrumbs">
+        <li><a href="/">Home</a></li>
+         
+        {% for i in products.category.get_slug_list %}
+           <li><a href="/category/{{ i }}">{{ i| get_name  }}</a></li>
+        {% endfor %}
+    
+    </ul> 
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 ">
+
+          <img src="{{ products.imageURL }}" class="img-fluid justify-content-center" style="max-width:600px; width:100%; max-height:350px;" alt="">
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-6 box-element ">
+          <div class="p-2 justify-content-around">
+            <div class="name">
+              <h4>
+                {{ products.name|title }}
+              </h4>
+            </div>
+            <hr>
+            <div class="description" style="overflow-y:scroll; height:200px;  ">
+              <p >{% if products.description %}{{products.description|linebreaks }}{% else %}<p>No Description{% endif %}</p>
+            </div>
+            <hr>
+            <div class="price">
+              <h3><strong>RS: {{products.price }}</strong></h3>
+            </div>
+            <hr>
+            <div class="tags">
+            {% for tag in products.tags.all %}
+              <a href="{% url 'product:product-tag' tag.slug %}"><strong>{{tag}}</strong></a>
+              {% endfor %}
+            </div>
+            <hr>
+            <div class="cart">
+
+              {% if request.user.is_authenticated %}
+              <a href="{{ products.add_to_cart }}" class="btn btn-primary btn-md p">
+                Add To cart
+                <i class="fas fa-shopping-cart ml-1"></i>
+              </a>
+              <a href="{{ products.remove_from_cart }}" class="btn btn-primary btn-md p">
+                Remove From cart
+                
+              </a>
+              {% else %}
+              <button class="btn btn-md btn-primary update-cart" data-product="{{ products.id }}" data-action="add">
+                Add To cart
+              </button>
+              <button class="btn btn-md btn-primary update-cart" data-product="{{ products.id }}" data-action="remove">Remove  cart</button>
+            
+              {% endif %}
+
+            </div>
+          </div>
+            
+          
+          <!--Content-->
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <hr>
+
+      
+    
+    </div class="mt-2">
+    {% if similar_products %} 
+    <h2 class="text-center mb-3">Similar Products</h2>
+    <div class="container">
+      <div class="row mb-5 ">
+      {% for item in similar_products %}
+        <div class="col-lg-3 ">
+          <div class="card box-element">
+            <div class="image">
+              <img src={{ item.imageURL }} class="img-thumbnail" style="max-width:800px; width:100%; height:185px; ">
+            </div>
+            <div class="name">
+              <h5>
+                <a href="{{ item.get_absolute_url }}"><strong>{{item.name}}</strong></a>
+              </h5>
+            </div>
+            <div class="card-footer pb-0">
+                <div class="row mb-0">
+                    <span class="float-left"><strong>RS: {{item.price}}</strong></span>
+                </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+
+
+  </main>
+  
+
+
+ 
+  {% endblock content %}

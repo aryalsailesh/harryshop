@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static  %}
+
+{% block title %} {{ instance.name }} {% endblock %}
+
+{% block content %}
+<br>
+<div class="text-center"><h2>{{instance.name}}</h2></div>
+<div class="container">
+{% if  instance.children.all %}
+    <h4>Sub Categories</h4>
+    {% for i in instance.children.all %}
+    <ul>
+      <li>
+        <a href="{{ i.slug }}"> {{ i.name }} </a><br>
+      </li>
+    </ul>
+        
+    {% endfor %}
+
+    <br><hr>
+{% endif %}
+</div>
+
+
+
+  <div class="container">
+    <div class="row " >
+    {% if instance.product_set.all %}
+    {% for i in instance.product_set.all %}
+      <div class="col-lg-3 mt-5">
+        <div class="card box-element">
+          <div class="image">
+            <img src="{{ i.imageURL }}" class=" img-thumbnail img-fluid justify-center-content" style="width: 100%; max-width: 500px; height: 235px; " alt="">
+          </div>
+          <div class="card-footer pb-0">
+            <div class="row mb-0">
+              <span class="float-left"><strong> {{ i.name }}</strong></span>
+            </div>
+          </div>
+          <div class="card-footer pb-0">
+            <div class="row mb-0">
+            {% for tag in i.tags.all %}
+            <a href="{% url 'product:product-tag' tag.slug %}">
+              <span class="p-1" >{{ tag }}</span>
+              </a>
+            {% endfor %}
+            </div>
+          </div>
+          <div class="card-footer pb-0">
+            <div class="row mb-0">
+              <span class="float-left"><strong>RS: {{ i.price }}</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    {% endif %}
+    </div>
+  </div>
+
+
+{% endblock %}

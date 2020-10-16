@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}Contacts{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-5">
+        <div class="mapouter border border-primary">
+            <div class="gmap_canvas">
+                <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Harry%20bhai%20&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+            </div>
+            <style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style>
+        </div>
+        
+        <div class="col-lg-4 col-md-12 col-sm-12 m-3 ">
+            <label><strong><u>General Information</u></strong></label>
+            <br>
+            <label class="font-weight-bold">Address:</label>
+            <h2>Dhikure Bazar, Likhu-01, Nuwakot</h2>
+
+            <label class="font-weight-bold">Email:</label>
+            <h2 class="email">harrybhai@gmail.com</h2>
+
+            <label class="font-weight-bold">Phone No. :</label>
+            <h2>977-9851161873</h2>
+
+
+        </div>
+        
+        
+    </div>
+
+</div>
+
+{% endblock content %}

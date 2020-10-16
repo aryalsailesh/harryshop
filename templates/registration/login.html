@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+<div class="container">
+    
+    {% if form.error %}
+    <P>
+        Your username and password didn't match.
+        Please try again.
+    </P>
+    {% endif %}
+</div>
+
+
+
+    {% if user.is_authenticated %}
+        <script type="text/javascript">
+
+            setTimeout(function(){
+                window.location.href = "/";
+            },0)
+    
+        </script>
+    {% else %}
+    <h1 class="text-center">Log-in</h1>
+    <div class='login-form container mt-4'>
+        <form action="/account/login/" method="POST">
+            {% csrf_token %}
+            <div id="div_id_username" class="form-group"> <label for="id_username" class=" requiredField">
+                Username/Email<span class="asteriskField">*</span> </label> <div class=""> <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" class="textinput textInput form-control" required="" id="id_username"> </div> </div> <div id="div_id_password" class="form-group"> <label for="id_password" class=" requiredField">
+                Password<span class="asteriskField">*</span> </label> <div class=""> <input type="password" name="password" autocomplete="current-password" class="textinput textInput form-control" required="" id="id_password"> </div> </div>
+
+            <input type="hidden" name="next" value="">
+            <p><input type="submit" value="Log-in"></p>
+        </form>
+        <p><a href="{% url 'password_reset' %}">Forgotten Your Password</a></p>
+    
+        <div class="social">
+            <ul>
+            <li class="facebook">
+            <a href="{% url 'social:begin' 'facebook' %}">Sign in with
+            Facebook</a>
+            </li>
+            <li class="google">
+            <a href="{% url 'social:begin' 'google-oauth2' %}">Login with
+            Google</a>
+            </li>
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+
+    
+
+
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends 'adminpages/admin_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="container mt-5 p-3">
+    {% if user.is_authenticated %}
+    <script type="text/javascript">
+
+        setTimeout(function(){
+            window.location.href = "{% url 'admin-home' %}";
+        },0)
+
+    </script>
+    {% else %}
+    <div class="container">
+        <h3>Welcome</h3>
+        <h3>Please Login</h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy}}
+            <input type="submit" value="Login">
+        </form>
+    </div>
+    {% endif %}
+</div>
+    
+{% endblock content %}

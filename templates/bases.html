@@ -1,0 +1,9 @@
+{% load namify %}
+
+<ul class="nav-item">
+    {% for c in cats %}
+    <li class="">
+        <a class="nav-link" href="/product/category/{{c.slug}}">{{c}}</a>
+    </li>
+    {% endfor %}
+</ul>

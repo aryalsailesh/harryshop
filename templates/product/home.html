@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load namify %}
+{% load paginator_tags %}
+{% get_pagination 2 1 %}
+{% load mptt_tags %}
+
+{% block title %}Home{% endblock %}
+
+
+  {% block content %}
+
+  <!-- <div class="container">
+    <form method="GET">
+      {{ myfilter.form }}
+      <input type="submit" value="submit">
+    </form>
+  </div> -->
+  
+  
+  <div class="container mt-4 mb-4">
+    {% if tag %}
+      <h2>Products tagged with "{{ tag.name }}"</h2>
+    {% endif %}
+  </div>
+  <div class="container">
+        <div class="row mt-3">
+          
+          {% for product in products %}
+          
+            <!--Grid column-->
+            <div class="col-lg-3 col-md-4 mb-4 mt-3 my-3">
+
+                <!--Card-->
+                <div class="card card-ecommerce box-element">
+
+                    <!--Card image-->
+                    <div class="view overlay poloroid">
+                        <img src="{{ product.imageURL }}" class=" img-thumbnail img-fluid justify-center-content" style="width: 100%; max-width: 500px; height: 235px; " alt="">
+                        
+                    </div>
+                    <!--Card image-->
+
+                    <!--Card content-->
+                    <div class="card-body">
+                        <!--Category & Title-->
+
+                        <h6 class="card-title mb-1"><strong><a href="{{ product.get_absolute_url }}" class="dark-grey-text">{{ product.name }}</a></strong></h6>
+                      
+                        
+                        <div class="card-footer pb-0">
+                          <div class="row mb-0">
+                            {% for tag in product.tags.all %}
+                            <a href="{% url 'product:product-tag' tag.slug %}">
+                            {{ tag.name }}
+                            </a>
+                            {% if not forloop.last %}, {% endif %}
+                            {% endfor %}                              
+                          </div>
+                        </div>
+                        <!--Card footer-->
+                        <div class="card-footer pb-0">
+                            <div class="row mb-0">
+                                <span class="float-left"><strong>RS: {{product.price}}</strong></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--Card content-->
+
+                </div>
+                <!--Card-->
+
+            </div>
+            <!--Grid column-->
+            {% endfor %}
+        </div>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      <script type="text/javascript">
+        function w3_open() {
+          document.getElementById("mySidebar").style.display = "block";
+        }
+        
+        function w3_close() {
+          document.getElementById("mySidebar").style.display = "none";
+        }
+      </script>
+  {% endblock content %}

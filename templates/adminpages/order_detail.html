@@ -1,0 +1,65 @@
+{% extends 'adminpages/admin_base.html' %}
+{% load static %}
+{% block title %}OrderDetail{% endblock title %}
+
+{% block content %}
+
+<div class="container mt-3">
+    <h2>Order Details</h2>
+        <hr>
+    <div class="row">
+        <div class="col-lg-12">
+            {% for order_items in object %}
+            
+                <h3 class="p-2">Order ID: #ORDER_{{order_items.id}}</h3>
+                <h3 class="p-2">User:{{order_items.user}}</h3>
+                <h3 class="p-2">Name: {{ order_items.user.first_name }} {{ order_items.user.last_name }}</h3>
+                <h3 class="p-2">Order Status: {{ order_items.ordered}}</h3>
+                <h3 class="p-2">Ordered Date: {{order_items.ordered_date}}</h3>
+                {% if order_items.address %}
+                <h3 class="p-2">Address: {{order_items.address.tol|capfirst}},{{order_items.address.municipality|capfirst}}-{{order_items.address.ward}}
+                    ,{{order_items.address.district|capfirst}},{{order_items.address.state|capfirst}}
+                </h3>
+                {% endif %}
+            
+            
+            {% endfor %}
+        </div>
+        
+        <div class="col-lg-12 mt-5">
+            <div class="table box-element">
+                <h3>Order Item</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total Price</th>
+
+                        </tr>
+                        
+                    </thead>
+                    <tbody>
+                        {% for order_items in object %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>
+                                <a href="#">
+                                  <h5><strong>{{ order_items.product.name }}</strong></h5>
+                                
+                                </a>
+                            </td>
+                            <td> {{ order_items.quantity }}</td>
+                            <td>RS: {{ order_items.get_total }}</td>
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

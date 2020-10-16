@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}esewa{% endblock title %}
+
+
+{% block content %}
+
+<h3 class="text-center mt-5">You will be redirected to E-sewa paymnet page</h3>
+<form action="https://uat.esewa.com.np/epay/main" method="POST" id="payment" style="display:none; ">
+    <input value="{{ orders.total_cart_price }}" name="tAmt" type="hidden">
+    <input value="{{ orders.total_cart_price }}" name="amt" type="hidden">
+    <input value="0" name="txAmt" type="hidden">
+    <input value="0" name="psc" type="hidden">
+    <input value="0" name="pdc" type="hidden">
+    <input value="epay_payment" name="scd" type="hidden">
+    <input value="{{ orders.id }}" name="pid" type="hidden">
+    <input value="http://127.0.0.1:8000/esewa-verify/" type="hidden" name="su">
+    <input value="{{ request.build_absolute_uri }}" type="hidden" name="fu">
+    <input value="Submit" type="submit">
+</form>
+
+<script type="text/javascript">
+    setTimeout(function(){
+        document.getElementById("payment").submit()
+    }, 1000)
+</script>
+
+{% endblock content %}
