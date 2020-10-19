@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate,login
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from .forms import LoginForm,UserRegistrationForm,UserEditForm,ProfileEditForm,CheckoutEditForm
 from .models import Profile
 from django.contrib import messages
@@ -152,33 +153,36 @@ def admin_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         
-        if form.is_valid():
+        if form.is_valid() :
             cd = form.cleaned_data
             user = authenticate(request,
                     username=cd['username'],
                     password=cd['password'])
-            if user is not None:
+            if user is not None :
                 if user.is_active and user.is_staff:
                     login(request, user)
                     return redirect('admin-home')
                 else:
-                    return HttpResponse('Disabled account')
+                    return HttpResponse('You are not authorized to see this page.')
             else:
                 return HttpResponse('Invalid login')
     else:
         form = LoginForm()
     return render(request, 'adminpages/admin_login.html', {'form': form})
 
-@login_required
+@staff_member_required
 def admin_home(request):
-    orders = OrderItem.objects.all()
-    myfilter = OrderItemFilter(request.GET,queryset=orders)
-    orders = myfilter.qs
-    context = {
-        'object':orders,
-        'myfilter':myfilter
-    }
-    return render(request,'adminpages/admin_home.html',context)
+    if request.user.is_staff:
+        orders = OrderItem.objects.all()
+        myfilter = OrderItemFilter(request.GET,queryset=orders)
+        orders = myfilter.qs
+        context = {
+            'object':orders,
+            'myfilter':myfilter
+        }
+        return render(request,'adminpages/admin_home.html',context)
+    else:
+        return HttpResponse('You are not authorized')
 
 @login_required
 def admin_order_detail(request,id):
