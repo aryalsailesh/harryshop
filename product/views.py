@@ -147,6 +147,8 @@ def search(request):
         if form.is_valid():
             query = form.cleaned_data['query']
             results = Product.objects.annotate(search=SearchVector('name','description'),).filter(search=query)
+    else:
+        pass
     return render(request,'product/search.html',{
         'query':query,
         'form':form,

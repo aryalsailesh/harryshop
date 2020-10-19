@@ -5,6 +5,7 @@ from django.shortcuts import reverse
 from mptt.models import MPTTModel
 from taggit.managers import TaggableManager
 from treewidget.fields import TreeForeignKey,TreeManyToManyField
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
@@ -46,7 +47,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200,unique=True)
     price = models.DecimalField(max_digits=20,decimal_places=2)
-    image = models.ImageField(upload_to='product/%Y/%m/%d',blank=True,null=True)
+    image = CloudinaryField('images')
     description = models.TextField(blank=True,null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

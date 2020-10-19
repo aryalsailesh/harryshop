@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from django.conf import settings
 import django_heroku
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 import os
 from pathlib import Path
 
@@ -51,6 +55,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'taggit',
     'django.contrib.postgres',
+    'cloudinary',
     
 ]
 
@@ -179,3 +184,9 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'sonikaaryal20180711@gmail.com'
 EMAIL_HOST_PASSWORD = 'bfojkjbszggaenjn'
 
+
+cloudinary.config(
+    cloud_name = "dtefsea4l",
+    api_key = "285338951716433",
+    api_secret = "oWcw39hAIrZOG0ld51y5mS0fnWU",
+)

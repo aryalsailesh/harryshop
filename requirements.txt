@@ -7,6 +7,7 @@ cffi==1.14.2
 chardet==3.0.4
 class-registry==2.1.2
 click==7.1.2
+cloudinary==1.22.0
 colorama==0.4.3
 contextlib2==0.6.0
 cryptography==3.1
