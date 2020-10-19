@@ -169,7 +169,9 @@ AUTHENTICATION_BACKENDS = [
     'social_core.backends.google.GoogleOAuth2',
 ]
 
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'
+
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = '/'
 
