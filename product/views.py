@@ -158,35 +158,40 @@ def search(request):
 
 def add_to_cart(request,slug):
     products = get_object_or_404(Product,slug=slug)
-    order_items,created = OrderItem.objects.get_or_create(user=request.user,ordered=False,product=products)
-    order_qs = Order.objects.filter(user=request.user,ordered=False)
-    p = order_items.product
-    if order_qs.exists():
-        orders = order_qs[0]
-        if orders.order.filter(product__slug=products.slug).exists():
-            if p.available_quantity > order_items.quantity:
-                order_items.quantity += 1
-                order_items.save()
-                return redirect('product:cart')
-            elif p.available_quantity == order_items.quantity:
-                messages.info(request,'No more item in stock.')
-                return redirect('product:cart')
-            
-        else:
-            orders.order.add(order_items)
-            if order_items.quantity <= 0:
-                order_items.quantity += 1
+    if products.available_quantity >= 1:
+        order_items,created = OrderItem.objects.get_or_create(user=request.user,ordered=False,product=products)
+        order_qs = Order.objects.filter(user=request.user,ordered=False)
+        p = order_items.product
+        if order_qs.exists():
+            orders = order_qs[0]
+            if orders.order.filter(product__slug=products.slug).exists():
+                if p.available_quantity > order_items.quantity:
+                    order_items.quantity += 1
+                    order_items.save()
+                    return redirect('product:cart')
+                elif p.available_quantity == order_items.quantity:
+                    messages.info(request,'No more item in stock.')
+                    return redirect('product:cart')
                 
-                order_items.save()
-                return redirect('product:cart')
+            else:
+                orders.order.add(order_items)
+                if order_items.quantity <= 0:
+                    order_items.quantity += 1
+                    
+                    order_items.save()
+                    return redirect('product:cart')
 
+                    
                 
-            
-    else:
-        order_date = timezone.now()
-        orders = Order.objects.create(user=request.user,ordered=False)
-        orders.order.add(order_items)
-        messages.info(request,'Item Added to cart.')
+        else:
+            order_date = timezone.now()
+            orders = Order.objects.create(user=request.user,ordered=False)
+            orders.order.add(order_items)
+            messages.info(request,'Item Added to cart.')
+    
+    elif products.available_quantity < 0:
+        messages.info(request,'This item is not in our stock rightnow. You can checkout our other products')
+        return redirect('product:product-detail',slug=slug)
     
     return redirect('product:cart')
 
