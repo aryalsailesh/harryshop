@@ -47,7 +47,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200,unique=True)
     price = models.DecimalField(max_digits=20,decimal_places=2)
-    image = CloudinaryField('images')
+    image = CloudinaryField('images',null=True,blank=True)
     description = models.TextField(blank=True,null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
