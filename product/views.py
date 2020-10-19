@@ -169,7 +169,7 @@ def add_to_cart(request,slug):
                 order_items.save()
                 return redirect('product:cart')
             elif p.available_quantity == order_items.quantity:
-                messages.error(request,'No more item in stock.')
+                messages.info(request,'No more item in stock.')
                 return redirect('product:cart')
             
         else:
