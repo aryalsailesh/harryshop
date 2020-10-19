@@ -44,4 +44,9 @@ class OrderAdmin(admin.ModelAdmin):
 class CheckoutAdmin(admin.ModelAdmin):
     list_display = ['user']
 
-admin.site.register(Category,DraggableMPTTAdmin)
+
+class CategoryAdmin(DraggableMPTTAdmin):
+    prepopulated_fields = {'slug':('name',)}
+
+
+admin.site.register(Category,CategoryAdmin)
