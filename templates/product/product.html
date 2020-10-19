@@ -25,13 +25,13 @@
         <!--Grid column-->
         <div class="col-md-6 ">
 
-          <img src="{{ products.imageURL }}" class="img-fluid justify-content-center" style="max-width:600px; width:100%; max-height:350px;" alt="">
+          <img src="{{ products.imageURL }}" class="img-fluid justify-content-center box-element" style="max-width:600px; width:100%; max-height:350px;" alt="">
 
         </div>
         <!--Grid column-->
 
         <!--Grid column-->
-        <div class="col-md-6 box-element ">
+        <div class="col-md-6  ">
           <div class="p-2 justify-content-around">
             <div class="name">
               <h4>
@@ -51,6 +51,10 @@
             {% for tag in products.tags.all %}
               <a href="{% url 'product:product-tag' tag.slug %}"><strong>{{tag}}</strong></a>
               {% endfor %}
+            </div>
+            <hr>
+            <div>
+              <h4>In Stock: {{products.available_quantity }}</h4>
             </div>
             <hr>
             <div class="cart">
