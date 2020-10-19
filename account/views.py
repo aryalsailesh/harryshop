@@ -184,7 +184,7 @@ def admin_home(request):
     else:
         return HttpResponse('You are not authorized')
 
-@login_required
+@staff_member_required
 def admin_order_detail(request,id):
     orders = OrderItem.objects.filter(pk=id)
    
@@ -194,7 +194,7 @@ def admin_order_detail(request,id):
     return render(request,'adminpages/order_detail.html',context)
 
 
-@login_required
+@staff_member_required
 def user_list(request):
     users = Profile.objects.all()
     search = User.objects.all()
@@ -207,7 +207,7 @@ def user_list(request):
     }
     return render(request,'adminpages/staff_list.html',context)
 
-@login_required
+@staff_member_required
 def user_detail(request,id):
     user = User.objects.filter(pk=id)
     profile = Profile.objects.filter(user__in=user)
