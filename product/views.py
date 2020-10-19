@@ -189,7 +189,7 @@ def add_to_cart(request,slug):
             orders.order.add(order_items)
             messages.info(request,'Item Added to cart.')
     
-    elif products.available_quantity < 0:
+    elif products.available_quantity < 1:
         messages.info(request,'This item is not in our stock rightnow. You can checkout our other products')
         return redirect('product:product-detail',slug=slug)
     
