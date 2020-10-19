@@ -157,15 +157,20 @@ def search(request):
 
 
 def add_to_cart(request,slug):
-    product = get_object_or_404(Product,slug=slug)
-    order_items,created = OrderItem.objects.get_or_create(user=request.user,ordered=False,product=product)
+    products = get_object_or_404(Product,slug=slug)
+    order_items,created = OrderItem.objects.get_or_create(user=request.user,ordered=False,product=products)
     order_qs = Order.objects.filter(user=request.user,ordered=False)
+    p = order_items.product
     if order_qs.exists():
         orders = order_qs[0]
-        if orders.order.filter(product__slug=product.slug).exists():
-            order_items.quantity += 1
-            order_items.save()
-            return redirect('product:cart')
+        if orders.order.filter(product__slug=products.slug).exists():
+            if p.available_quantity > order_items.quantity:
+                order_items.quantity += 1
+                order_items.save()
+                return redirect('product:cart')
+            elif p.available_quantity == order_items.quantity:
+                messages.info(request,'No more item in stock.')
+                return redirect('product:cart')
             
         else:
             orders.order.add(order_items)
