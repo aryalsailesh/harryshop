@@ -287,7 +287,7 @@ class CartView(View):
 
 @login_required
 def chekout(request):
-    
+    o_items = OrderItem.objects.get(user=request.user,ordered=False)
     checkout = Checkout.objects.get_or_create(user=request.user)
     try:
         orders = Order.objects.get(user=request.user,ordered=False)
@@ -311,6 +311,9 @@ def chekout(request):
                 for item in order_items:
                     item.save()
                 orders.save()
+                p = o_items.product
+                p.available_quantity = p.available_quantity - o_items.quantity
+                p.save()
                 messages.success(request,'Your order has been placed and will be delivered very soon.')
                 return redirect('/')
     else:
@@ -353,6 +356,7 @@ class EsewaVerify(View):
         print(status)
         if status == 'Success':
             orders = Order.objects.get(user=request.user,ordered=False)
+            o_items = OrderItem.objects.get(user=request.user,ordered=False)
             checkout = Checkout.objects.get(user=request.user)
             orders.ordered = True
             orders.payment = 'esewa'
@@ -361,6 +365,9 @@ class EsewaVerify(View):
             for item in order_items:
                 item.save()
             orders.save()
+            p = o_items.product
+            p.available_quantity = p.available_quantity - o_items.quantity
+            p.save()
             messages.success(request,'Order has been placed and will be shipped soon !!!')
             return redirect('/')
         else:
