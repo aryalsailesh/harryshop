@@ -385,6 +385,7 @@ class EsewaVerify(View):
             messages.error(request,'Payment is not successful and order has not been placed.')
             return redirect('/cart/')
 
+
 def add_to_database(request):
      
     try:
