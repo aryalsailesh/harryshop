@@ -175,20 +175,20 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = '/'
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '427933295570-dtp45vo7754olcpsi4ch3isecb3i3589.apps.googleusercontent.com' # Google Consumer Key
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'v-fTY_59rPA2sq1firLrcf9q' # Google Consumer Secret
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'XXXXXXX' # Google Consumer Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'XXXXX' # Google Consumer Secret
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'sonikaaryal20180711@gmail.com'
-EMAIL_HOST_PASSWORD = 'bfojkjbszggaenjn'
+EMAIL_HOST_USER = 'XXXXXXX'
+EMAIL_HOST_PASSWORD = 'XXXXX'
 
 
 cloudinary.config(
-    cloud_name = "dtefsea4l",
-    api_key = "285338951716433",
-    api_secret = "oWcw39hAIrZOG0ld51y5mS0fnWU",
+    cloud_name = "XXXXX",
+    api_key = "XXXX",
+    api_secret = "XXXXXXXX",
 )
